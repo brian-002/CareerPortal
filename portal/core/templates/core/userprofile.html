@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title %} Profile {% endblock%}
+
+{% block content %}
+<div class="w-3/4 my-2 mx-auto bg-gray-100 p-6">
+    {% for profile in profiles %}
+    <h3 class="text-3xl mb-2 text-center"><strong>{{ profile.first_name}} {{ profile.second_name}} {{profile.sir_name}}</strong> </h3>
+
+    <h4 class="text-3xl mb-2 text-center"><strong>User name:</strong> {{profile.user}} </h4>
+
+    <p>
+        {{profile.user_bio}}
+    </p>
+
+    
+
+    <h3 class="text-3xl text-black-900"><strong>Personal information</strong></h3>
+    <ul>
+        <li><strong>full names</strong>:{{ profile.first_name}}  {{ profile.second_name}}  {{profile.sir_name}}</li>
+        <li><strong>national id No</strong>:{{ profile.id_no }}</li>
+        <li><strong>employment status</strong>: {{ profile.employment_status }}</li>
+        <li><strong>gender</strong>: {{ profile.gender }}</li>
+        <li><strong>Marital status</strong>:{{ profile.marital_status }}</li>
+    </ul>
+
+    <h3 class="text-3xl text-black-900"><strong>Educational information </strong></h3>
+    <p><strong>highest level of education</strong>:{{ profile.highest_level_of_education }}</p>
+    <ul>
+        <h4 class="text-2xl"><strong>certificates</strong></h4>
+        <li><strong>certificates</strong>: {{ profile.certificates }}</li>
+        <li><strong>CV</strong>: {{ profile.curriculum_vitae }}</li>
+    </ul>
+
+
+    <h3 class="text-3xl text-black-900"><strong>region information</strong></h3>
+    <ul>
+        <li><strong>town</strong>: {{profile.town_of_residence}}</li>
+        <li><strong>P.0 Box</strong>: {{ profile.po_box}}</li>
+        <li><strong>zip code</strong>:{{ profile.zip_code }}</li>
+    </ul>
+
+    <h3 class="text-3xl text-black-900"><strong>contact information</strong></h3>
+    <ul>
+        <li><strong>Email</strong>:{{ profile.contact_email }}</li>
+        <li><strong>Phone No</strong>:{{profile.contact_phone_no}}</li>
+        <li><strong>Alternative phone No</strong>:{{ profile.alternative_phone_no }}</li>
+    </ul>
+
+    <h3 class="text-3xl text-black-900"><strong>next of kin information</strong></h3>
+    <ul>
+        <li><strong>Email</strong>:{{profile.nok_email}}</li>
+        <li><strong>Phone No</strong>:{{profile.nok_phone_no}}</li>
+        <li><strong>Alternative phone No</strong>:{{profile.nok_alternative_phone_no}}</li>
+    </ul>
+    
+    {% endfor %}
+</div>
+
+<div class="w-3/4 my-2 mx-auto bg-gray-100 p-6">
+    <a href="{% url 'core:edit_user_profile' %}" class="text-centre px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700">Edit profile</a>
+</div>
+{% endblock%}

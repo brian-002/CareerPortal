@@ -1,0 +1,63 @@
+{% extends 'core/base.html' %}
+
+{% block title%} {{ item.name }} {% endblock%}
+
+{% block content%}
+<div class="grid grid-cols-5 gap-6 ">
+    <div class="col-span-3 bg-gray-100 py-3 px-3 rounded-xl">
+        {% if item.description %}
+            <h3><b>Description:</b></h3>
+            <p class="rounded-xl"> {{ item.description }}</p>
+        {% endif %}
+
+        {% if item.requirement %}
+        <h3><b>Requirements:</b></h3>
+        <p class="rounded-xl"> {{ item.requirement }}</p>
+        {% endif %}
+
+        {% if item.duties %}
+        <h3><b>Expected Duties:</b></h3>
+        <p class="rounded-xl"> {{ item.duties }}</p>
+        {% endif %}
+    </div>
+
+    <div class="col-span-2 bg-gray-200 p-6 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{item.name}}</h1>
+
+        <p class="text-gray-500">Department: <b>{{item.department}}</b></p>
+        <p class="text-gray-500">Job category: <b>{{item.job_category}}</b></p>
+        <p class="text-gray-500">deadline: <b>{{item.deadline}}</b></p>
+
+        {% if request.user == item.created_by %}
+            <div class="mt-6 p-6 bg-white rounded-xl">
+                <p>this is your item!</p>
+
+                <a href="{% url 'item:delete' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-red-700 ">delete</a>
+                <a href="{% url 'item:edit' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700 ">edit</a>
+                <a href="{% url 'Controlpanel:applicants' %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700 ">Applicants</a>
+            </div>
+  
+        {% endif %}
+
+        {% if user.is_authenticated and not user.is_superuser %}
+        <a href="{% url 'core:apply_for_job' %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700 ">apply</a>
+        <a href="{% url 'customercare:new' item.id %}" class="inline-block mt-6 px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700 ">Customercare</a>
+        {% endif %}
+
+
+        
+    </div>
+</div>
+
+<div class="grid grid-cols-3 gap-3">
+    {% for item in related_items %}
+        <div>
+            <a href="{% url 'item:detail' item.id %}">
+                <div class="p-6 bg-white rounded-xl">
+                    <h2 class="text-2xl">Position: {{ item.name }}</h2>
+                </div>
+            </a>
+        </div>
+    {% endfor %}
+</div>
+{% endblock%}

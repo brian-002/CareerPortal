@@ -1,0 +1,72 @@
+{% extends 'core/base.html' %}
+
+{% block title%} Home {% endblock%}
+
+{% block content%}
+    <div class="py-1 px-1 flex justify-between items-center ">
+
+        {% if request.user.is_authenticated %}
+            <form action="{% url 'core:logout' %}" method="post" class="">
+                {% csrf_token %}
+                <button type="submit"  class="px-6 py-3 text-lg font-semibold bg-red-500 text-white rounded-xl hover:bg-red-700">log out</button>
+            </form>
+        {% endif %}
+    </div>
+   <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center font-semibold"><strong>available</strong></h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for item in items %}
+            <div>
+                <a href="{% url 'item:detail' item.id %}">
+                    <div class="p-6 bg-white rounded-xl">
+                        <h2 class="text-2xl">Position: {{ item.name }}</h2>
+                        <p class="text-gray-500">Department: <b>{{item.department}}</b></p>
+                        <p class="text-gray-500">Job category: <b>{{item.job_category}}</b></p>
+                        <p class="text-gray-500">deadline: <b>{{item.deadline}}</b></p>
+                        <p class="text-gray-500">requirements: <b>{{item.requirement}}</b></p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+   </div>
+
+
+<!--
+   <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Departments</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {% for department in departments %}
+            <div>
+                <a href="#">
+                    <div class="p-6 bg-white rounded-xl">
+                        <h2 class="text-2xl">Department: {{ department.name }}</h2>
+                        <p class="text-gray-500"><b>{{department.item.count}} available</b></p>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+
+   <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+        <h2 class="mb-12 text-2xl text-center">Categories</h2>
+
+        <div class="grid grid-cols-3 gap-3">
+            {% for category in categories %}
+                <div>
+                    <a href="#">
+                        <div class="p-6 bg-white rounded-xl">
+                            <h2 class="text-2xl">category: {{ category.name }}</h2>
+                            <p class="text-gray-500"><b>{{ item.category.count }} available</b></p>
+                        </div>
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+   </div>
+-->
+{% endblock%}

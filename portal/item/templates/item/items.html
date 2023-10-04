@@ -1,0 +1,54 @@
+{% extends 'core/base.html' %}
+
+{% block title %} search {% endblock %}
+
+{% block content %}
+    <div class="pb-6 grid grid-cols-4 gap-4">
+        <div class="col-span-1">
+            <form action="{% url 'item:items' %}" method="get">
+                <input type="text" name="query" class="w-full py-4 px-6 border rounded-xl " placeholder="search" value="{{ query }}">
+
+                <button type="submit"  class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Search</button>
+            </form>
+
+            <hr class="my-6">
+
+            <p class="font-semibold">departments</p>
+
+            <ul>
+                {% for department in departments%}
+                 <li class="py-2 px-2 rounded-xl {% if department.id == department_id %} bg-gray-200 {% endif %}">
+                    <a href="{% url 'item:items' %}?query={{query}}&department={{department.id}}">{{department.name}}</a>
+                 </li>
+                {% endfor %}
+            </ul>
+
+            <hr class="my-6">
+
+            <p class="font-semibold">clear filters</p>
+
+            <ul>
+                <li><a href="{% url 'item:items' %}" class="mt-2 py-4 px-8 inline-block bg-yellow-500 text-lg rounded-xl text-white">clear</a></li>
+            </ul>
+        </div>
+
+        <div class="col-span-3">
+            <div class="grid grid-cols-3 gap-3">
+                {% for item in items %}
+                    <div>
+                        <a href="{% url 'item:detail' item.id %}">
+                            <div class="p-6 bg-white rounded-xl">
+                                <h2 class="text-2xl">Position: {{ item.name }}</h2>
+                                <p class="text-gray-500">Department: <b>{{item.department}}</b></p>
+                                <p class="text-gray-500">Job category: <b>{{item.job_category}}</b></p>
+                                <p class="text-gray-500">Description: <b>{{item.description}}</b></p>
+                                <p class="text-gray-500">deadline: <b>{{item.deadline}}</b></p>
+                                <p class="text-gray-500">requirements: <b>{{item.requirement}}</b></p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
